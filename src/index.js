@@ -3,6 +3,8 @@ const SerialPort = require('serialport')
 const Bartender = require('./providers/Bartender')
 const initSerial = require('./utils/serial')
 
+require('./DAO/applyDefault')
+
 async function run() {
   const portsList = await SerialPort.list()
 

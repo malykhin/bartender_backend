@@ -1,7 +1,8 @@
 class Common {
-  constructor(db, name) {
+  constructor(db, name, defaultStructure) {
     this.db = db
     this.name = name
+    this.defaultStructure = defaultStructure
   }
 
   getById(id) {

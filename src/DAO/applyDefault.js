@@ -12,13 +12,11 @@ const filenameFilter = (filename) =>
 const dbDefaults = fs
   .readdirSync(path.resolve(__dirname))
   .filter(filenameFilter)
-  .map((filename) => require(path.resolve(__dirname, filename)).name)
-  .filter((item) => item)
+  .map((filename) => require(path.resolve(__dirname, filename)))
+  .filter((item) => item.name && item.defaultStructure)
   .reduce((acc, item) => {
-    acc[item] = []
+    acc[item.name] = item.defaultStructure
     return acc
   }, {})
 
 db.defaults(dbDefaults).write()
-
-console.log(dbDefaults)
