@@ -1,6 +1,6 @@
 const SerialPort = require('serialport')
 
-const Bartender = require('./services/Bartender')
+const Bartender = require('./providers/Bartender')
 const initSerial = require('./utils/serial')
 
 async function run() {
