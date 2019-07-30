@@ -1,40 +1,29 @@
+const Common = require('./Common')
+
 const slotDao = require('../DAO/slot')
 const slotModel = require('../Models/slot')
 
-function getAll() {
-  return slotDao.getAll()
+// const liquidDao = require('../DAO/liquid')
+// const liquidModel = require('../Models/liquid')
+
+class Slot extends Common {
+  constructor(model, dao) {
+    super(model, dao)
+  }
+
+  getAll() {
+    return this.dao.getAll() //TODO: get with related liquids
+  }
+
+  getById(id) {
+    return this.dao.getById(id) //TODO: get with related liquid
+  }
+
+  assignLiquid(slotId, liquidId) {
+    const slotToAttachLiquid = { ...this.dao.getById(slotId), ...liquidId }
+    this.model.validate(slotToAttachLiquid)
+    return this.dao.patchById(slotId, slotToAttachLiquid)
+  }
 }
 
-function getById(id) {
-  return slotDao.getById(id)
-}
-
-function create(data) {
-  const slot = slotModel.create(data)
-  return slotDao.create(slot)
-}
-
-function patchById(id, slot) {
-  const slotToPatch = { ...slotDao.getById(id), ...slot }
-  slotModel.validate(slotToPatch)
-  return slotDao.patchById(id, slotToPatch)
-}
-
-function deleteById(id) {
-  return slotDao.delete(id)
-}
-
-function assignLiquid(slotId, liquidId) {
-  const slotToAttachLiquid = { ...slotDao.getById(slotId), ...liquidId }
-  slotModel.validate(slotToAttachLiquid)
-  return slotDao.patchById(slotId, slotToAttachLiquid)
-}
-
-module.exports = {
-  getAll,
-  getById,
-  create,
-  patchById,
-  deleteById,
-  assignLiquid,
-}
+module.exports = new Slot(slotModel, slotDao)
