@@ -1,16 +1,12 @@
-const SerialPort = require('serialport')
+require('./DAO/applyDefault')
 
 const Bartender = require('./providers/Bartender')
 const initSerial = require('./utils/serial')
 
-require('./DAO/applyDefault')
+const config = require('./config')
 
 async function run() {
-  const portsList = await SerialPort.list()
-
-  console.log(portsList)
-
-  const { port, parser } = initSerial('/dev/tty.usbserial-A9OFBDHD', 57600)
+  const { port, parser } = initSerial(config.serialPort, config.baudRate)
 
   const bartender = new Bartender({ port, parser, timeout: 5000 })
 
