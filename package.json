@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --inspect ./src/index.js",
-    "run": "node ./src/index.js"
+    "run": "node ./src/index.js",
+    "test": "NODE_ENV=test jest --coverage"
   },
   "type": "commonjs",
   "engines": {
@@ -24,7 +25,15 @@
   },
   "devDependencies": {
     "eslint": "^6.1.0",
+    "eslint-plugin-jest": "^22.14.1",
     "eslint-plugin-node": "^9.1.0",
+    "jest": "^24.8.0",
     "nodemon": "^1.19.1"
+  },
+  "jest": {
+    "testMatch": [
+      "**/*.test.js"
+    ],
+    "globalSetup": "./tests/setup.js"
   }
 }

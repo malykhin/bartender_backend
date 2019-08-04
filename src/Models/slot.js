@@ -10,7 +10,9 @@ const schema = Joi.object().keys({
   coordinate: Joi.number()
     .integer()
     .required(),
-  liquidId: Joi.string().uuid(),
+  liquidId: Joi.string()
+    .uuid()
+    .allow(null),
   shotVolume: Joi.number()
     .integer()
     .required(),

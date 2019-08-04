@@ -19,11 +19,11 @@ class Slot extends Common {
   }
 
   getAll() {
-    return relateOneToOne(this.dao.getAll(), this.liquidDao.getAll(), 'liquidId', 'slot')
+    return relateOneToOne(this.dao.getAll(), this.liquidDao.getAll(), 'liquidId', 'liquid')
   }
 
   getById(id) {
-    return relateOneToOne(this.dao.getById(id), this.liquidDao.getAll(), 'liquidId', 'slot')
+    return relateOneToOne(this.dao.getById(id), this.liquidDao.getAll(), 'liquidId', 'liquid')
   }
 
   assignLiquid(slotId, liquidId) {

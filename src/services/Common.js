@@ -24,7 +24,7 @@ class Common {
   }
 
   deleteById(id) {
-    return this.dao.delete(id)
+    return this.dao.deleteById(id)
   }
 }
 

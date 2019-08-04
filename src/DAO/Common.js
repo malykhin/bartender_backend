@@ -16,6 +16,7 @@ class Common {
     return this.db
       .get(this.name)
       .push(entity)
+      .find({ id: entity.id })
       .write()
   }
 
