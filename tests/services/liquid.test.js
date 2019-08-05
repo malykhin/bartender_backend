@@ -1,24 +1,5 @@
 const liquid = require('../../src/services/liquid')
-
-const rum = {
-  name: 'rum',
-  description: 'rum',
-}
-
-const cola = {
-  name: 'cola',
-  description: 'cola',
-}
-
-const whiskey = {
-  name: 'whiskey',
-  description: 'whiskey',
-}
-
-const vodka = {
-  name: 'vodka',
-  description: 'v',
-}
+const { rum, cola, whiskey, vodka } = require('../mocks/liquids')
 
 describe('liquid service', () => {
   it('Should be initialized', () => {

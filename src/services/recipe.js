@@ -79,10 +79,6 @@ class Recipe extends Common {
       )
   }
 
-  getAll() {
-    return this.dao.getAll()
-  }
-
   addIngredient(receiptId, liquidId, volume) {
     if (_.isEmpty(this.dao.getById(receiptId))) {
       throw errors.EntityIsNotExist
