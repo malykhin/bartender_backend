@@ -23,10 +23,28 @@ const tonic = {
   description: 'tonic',
 }
 
+const grenadine = {
+  name: 'grenadine',
+  description: 'grenadine',
+}
+
+const water = {
+  name: 'water',
+  description: 'water',
+}
+
+const aperol = {
+  name: 'aperol',
+  description: 'aperol',
+}
+
 module.exports = {
   rum,
   cola,
   whiskey,
   vodka,
   tonic,
+  grenadine,
+  water,
+  aperol,
 }

@@ -82,6 +82,14 @@ class Bartender {
     return this.sendCommand({ command: commands.PUSH_DOZER })
   }
 
+  idleDozer() {
+    return this.sendCommand({ command: commands.IDLE_DOZER })
+  }
+
+  prepareDozer() {
+    return this.sendCommand({ command: commands.PREPARE_DOZER })
+  }
+
   getStatus() {
     return this.sendCommand({ command: commands.GET_STATUS })
   }

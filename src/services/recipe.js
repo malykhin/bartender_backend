@@ -29,10 +29,12 @@ class Recipe extends Common {
     _slotDao,
   ) {
     super(model, dao)
-    this.recipeIngredientDao = _recipeIngredientDao
     this.recipeIngredientModel = _recipeIngredientModel
-    this.liquidDao = _liquidDao
+    this.recipeIngredientDao = _recipeIngredientDao
+
     this.liquidModel = _liquidModel
+    this.liquidDao = _liquidDao
+
     this.slotModel = _slotModel
     this.slotDao = _slotDao
   }
@@ -71,11 +73,12 @@ class Recipe extends Common {
       .map((item) => item.liquidId)
 
     const grouped = _.groupBy(recipeIngredientDao.getAll(), 'receiptId')
-
     return this.dao
       .getAll()
       .filter((recipe) =>
-        grouped[recipe.id].every((recipeIngredient) => availableLiquidIds.includes(recipeIngredient.liquidId)),
+        _.get(grouped, recipe.id, []).every((recipeIngredient) =>
+          availableLiquidIds.includes(recipeIngredient.liquidId),
+        ),
       )
   }
 
@@ -86,7 +89,8 @@ class Recipe extends Common {
     if (_.isEmpty(this.liquidDao.getById(liquidId))) {
       throw errors.EntityIsNotExist
     }
-    return this.recipeIngredientDao.create({ receiptId, liquidId, volume })
+    const entity = this.recipeIngredientModel.create({ receiptId, liquidId, volume })
+    return this.recipeIngredientDao.create(entity)
   }
 
   updateIngredient(ingredientId, liquidId, volume) {
