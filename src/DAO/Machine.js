@@ -11,11 +11,10 @@ class Machine extends Common {
   }
 
   update(entity) {
-    return this.db.set(entity).write()
-  }
-
-  updateField(key, value) {
-    return this.db.set(`${this.name}.${key}`, value).write()
+    return this.db
+      .set(this.name, entity)
+      .get(this.name)
+      .write()
   }
 }
 

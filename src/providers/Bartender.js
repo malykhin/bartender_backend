@@ -56,7 +56,7 @@ class Bartender {
     return this.sendCommand({ command: commands.GET_SETTINGS })
   }
 
-  setSettings(zeroSpeed, zeroAccel, maxStroke, speed, accel, dozerOn, dozerOff, dozerCycleDelay) {
+  setSettings(zeroSpeed, zeroAccel, maxStroke, speed, accel, dozerOn, dozerOff, dozerIdle, dozerCycleDelay) {
     return this.sendCommand({
       command: commands.SET_SETTINGS,
       zeroSpeed,
@@ -66,6 +66,7 @@ class Bartender {
       accel,
       dozerOn,
       dozerOff,
+      dozerIdle,
       dozerCycleDelay,
     })
   }
