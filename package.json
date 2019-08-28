@@ -17,19 +17,19 @@
   "license": "ISC",
   "dependencies": {
     "@serialport/parser-readline": "^2.0.2",
-    "apollo-server": "^2.8.1",
-    "graphql": "^14.4.2",
+    "apollo-server": "^2.9.1",
+    "graphql": "^14.5.3",
     "joi": "^14.3.1",
     "lodash": "^4.17.15",
     "lowdb": "^1.0.0",
     "serialport": "^7.1.5",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "eslint": "^6.1.0",
-    "eslint-plugin-jest": "^22.14.1",
+    "eslint": "^6.2.2",
+    "eslint-plugin-jest": "^22.15.2",
     "eslint-plugin-node": "^9.1.0",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.1"
   },
   "jest": {
