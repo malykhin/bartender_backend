@@ -28,6 +28,7 @@ class Common {
     return this.db
       .get(this.name)
       .remove({ id })
+      .get('0')
       .write()
   }
 
