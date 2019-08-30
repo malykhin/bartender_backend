@@ -9,5 +9,11 @@ module.exports = {
     editLiquid: (_, { id, name, description }, { dataSources: { liquid } }) => {
       return liquid.patchById(id, { name, description })
     },
+    createSlot: (_, { name, description, coordinate, liquidId, shotVolume }, { dataSources: { slot } }) => {
+      return slot.create({ name, description, coordinate, liquidId, shotVolume })
+    },
+    deleteSlot: (_, { id }, { dataSources: { slot } }) => {
+      return slot.deleteById(id)
+    },
   },
 }
