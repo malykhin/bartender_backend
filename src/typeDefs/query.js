@@ -6,5 +6,6 @@ module.exports = gql`
     slot(id: ID!): Slot
     liquids: [Liquid]
     liquid(id: ID!): Liquid
+    machine: Machine
   }
 `
