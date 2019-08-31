@@ -15,5 +15,8 @@ module.exports = {
     deleteSlot: (_, { id }, { dataSources: { slot } }) => {
       return slot.deleteById(id)
     },
+    editSlot: (_, { id, name, description, coordinate, liquidId, shotVolume }, { dataSources: { slot } }) => {
+      return slot.patchById(id, { name, description, coordinate, liquidId, shotVolume })
+    },
   },
 }

@@ -7,5 +7,6 @@ module.exports = gql`
     editLiquid(id: ID!, name: String!, description: String!): Liquid
     createSlot(name: String!, description: String!, coordinate: Int!, liquidId: ID!, shotVolume: Int!): Slot
     deleteSlot(id: ID!): Slot
+    editSlot(id: ID!, name: String!, description: String!, coordinate: Int!, liquidId: ID!, shotVolume: Int!): Slot
   }
 `
