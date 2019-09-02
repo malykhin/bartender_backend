@@ -1,3 +1,9 @@
+# bartender_backend
+
+1. `npm i`
+2. `cp .env_sample .env`
+3. `npm run start:dev`
+
 ## TODO:
 
 - ~~finish recipe service;~~

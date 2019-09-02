@@ -1,3 +1,4 @@
+require('dotenv').config()
 require('./DAO/applyDefault')
 
 // const config = require('./config')

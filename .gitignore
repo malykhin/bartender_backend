@@ -3,3 +3,4 @@ db.json
 test.db.json
 node_modules
 coverage
+.env

@@ -1,4 +1,4 @@
 module.exports = {
-  serialPort: '/dev/tty.usbserial-A9OFBDHD',
-  baudRate: 57600,
+  serialPort: process.env.SERIAL_PORT,
+  baudRate: process.env.BAUD_RATE,
 }
