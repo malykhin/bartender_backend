@@ -12,8 +12,9 @@ class Machine {
   }
 
   update(entity) {
-    this.model.validate(entity)
-    return this.dao.update(entity)
+    const entityToPatch = { ...this.dao.get(), ...entity }
+    this.model.validate(entityToPatch)
+    return this.dao.update(entityToPatch)
   }
 
   updateField(key, value) {

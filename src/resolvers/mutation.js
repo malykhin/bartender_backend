@@ -18,5 +18,17 @@ module.exports = {
     editSlot: (_, { id, name, description, coordinate, liquidId, shotVolume }, { dataSources: { slot } }) => {
       return slot.patchById(id, { name, description, coordinate, liquidId, shotVolume })
     },
+    editAxis: (_, { zeroSpeed, zeroAccel, maxStroke, speed, accel, stepsPerMm }, { dataSources: { machine } }) => {
+      return machine.update({ zeroSpeed, zeroAccel, maxStroke, speed, accel, stepsPerMm })
+    },
+    editDozer: (_, { dozerOn, dozerOff, dozerIdle, dozerCycleDelay }, { dataSources: { machine } }) => {
+      return machine.update({ dozerOn, dozerOff, dozerIdle, dozerCycleDelay })
+    },
+    editFinalPosition: (_, { finalPosition }, { dataSources: { machine } }) => {
+      return machine.update({ finalPosition })
+    },
+    editHomePosition: (_, { homePosition }, { dataSources: { machine } }) => {
+      return machine.update({ homePosition })
+    },
   },
 }
