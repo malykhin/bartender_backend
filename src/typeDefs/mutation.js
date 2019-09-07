@@ -14,5 +14,8 @@ module.exports = gql`
     editDozer(dozerOn: Int!, dozerOff: Int!, dozerIdle: Int!, dozerCycleDelay: Int!): Machine
     editFinalPosition(finalPosition: Int!): Machine
     editHomePosition(homePosition: Int!): Machine
+
+    createRecipe(name: String!, description: String!): Recipe
+    deleteRecipe(id: ID!): Recipe
   }
 `

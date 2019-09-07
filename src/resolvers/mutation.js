@@ -30,5 +30,11 @@ module.exports = {
     editHomePosition: (_, { homePosition }, { dataSources: { machine } }) => {
       return machine.update({ homePosition })
     },
+    createRecipe: (_, { name, description }, { dataSources: { recipe } }) => {
+      return recipe.create({ name, description })
+    },
+    deleteRecipe: (_, { id }, { dataSources: { recipe } }) => {
+      return recipe.deleteById(id)
+    },
   },
 }
