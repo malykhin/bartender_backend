@@ -39,5 +39,14 @@ module.exports = {
     editRecipe: (_, { id, name, description }, { dataSources: { recipe } }) => {
       return recipe.patchById(id, { name, description })
     },
+    createIngredient: (_, { recipeId }, { dataSources: { recipe } }) => {
+      return recipe.addIngredient(recipeId, null, null)
+    },
+    deleteIngredient: (_, { ingredientId }, { dataSources: { recipe } }) => {
+      return recipe.deleteIngredient(ingredientId)
+    },
+    editIngredient: (_, { id, liquidId, volume }, { dataSources: { recipe } }) => {
+      return recipe.updateIngredient(id, liquidId, volume)
+    },
   },
 }

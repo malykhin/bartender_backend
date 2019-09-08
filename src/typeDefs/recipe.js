@@ -5,5 +5,6 @@ module.exports = gql`
     id: ID
     name: String
     description: String
+    ingredients: [RecipeIngredient]
   }
 `

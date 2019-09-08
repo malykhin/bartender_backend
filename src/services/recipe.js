@@ -43,7 +43,7 @@ class Recipe extends Common {
     const withRecipeIngredients = relateOneToMany(
       this.dao.getById(id),
       this.recipeIngredientDao.getAll(),
-      'receiptId',
+      'recipeId',
       'ingredients',
     )
     const liquids = this.liquidDao.getAll()
@@ -72,7 +72,7 @@ class Recipe extends Common {
       .filter((item) => item)
       .map((item) => item.liquidId)
 
-    const grouped = _.groupBy(recipeIngredientDao.getAll(), 'receiptId')
+    const grouped = _.groupBy(recipeIngredientDao.getAll(), 'recipeId')
     return this.dao
       .getAll()
       .filter((recipe) =>
@@ -82,14 +82,14 @@ class Recipe extends Common {
       )
   }
 
-  addIngredient(receiptId, liquidId, volume) {
-    if (_.isEmpty(this.dao.getById(receiptId))) {
+  addIngredient(recipeId, liquidId, volume) {
+    if (_.isEmpty(this.dao.getById(recipeId))) {
       throw errors.EntityIsNotExist
     }
-    if (_.isEmpty(this.liquidDao.getById(liquidId))) {
+    if (liquidId && _.isEmpty(this.liquidDao.getById(liquidId))) {
       throw errors.EntityIsNotExist
     }
-    const entity = this.recipeIngredientModel.create({ receiptId, liquidId, volume })
+    const entity = this.recipeIngredientModel.create({ recipeId, liquidId, volume })
     return this.recipeIngredientDao.create(entity)
   }
 

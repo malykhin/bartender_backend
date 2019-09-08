@@ -3,11 +3,13 @@ const Common = require('./Common')
 
 const schema = Joi.object().keys({
   id: Joi.string().uuid(),
-  receiptId: Joi.string().uuid(),
-  liquidId: Joi.string().uuid(),
+  recipeId: Joi.string().uuid(),
+  liquidId: Joi.string()
+    .uuid()
+    .allow(null),
   volume: Joi.number()
     .integer()
-    .required(),
+    .allow(null),
 })
 
 class RecipeIngredient extends Common {
