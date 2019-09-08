@@ -36,5 +36,8 @@ module.exports = {
     deleteRecipe: (_, { id }, { dataSources: { recipe } }) => {
       return recipe.deleteById(id)
     },
+    editRecipe: (_, { id, name, description }, { dataSources: { recipe } }) => {
+      return recipe.patchById(id, { name, description })
+    },
   },
 }

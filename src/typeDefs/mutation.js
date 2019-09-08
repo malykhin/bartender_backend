@@ -17,5 +17,6 @@ module.exports = gql`
 
     createRecipe(name: String!, description: String!): Recipe
     deleteRecipe(id: ID!): Recipe
+    editRecipe(id: ID!, name: String!, description: String!): Recipe
   }
 `

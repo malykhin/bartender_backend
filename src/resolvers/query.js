@@ -6,5 +6,6 @@ module.exports = {
     liquid: (_, { id }, { dataSources: { liquid } }) => liquid.getById(id),
     machine: (_, __, { dataSources: { machine } }) => machine.get(),
     recipes: (_, __, { dataSources: { recipe } }) => recipe.getAll(),
+    recipe: (_, { id }, { dataSources: { recipe } }) => recipe.getById(id),
   },
 }
