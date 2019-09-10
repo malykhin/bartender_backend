@@ -1,3 +1,7 @@
+const pubSub = require('../providers/apolloPubSub')
+const { STATUS_CHANGED } = require('../constants/subscriptionStatuses')
+const { BUSY, READY } = require('../constants/machineStatuses')
+
 module.exports = {
   Mutation: {
     createLiquid: (_, { name, description }, { dataSources: { liquid } }) => {
@@ -47,6 +51,18 @@ module.exports = {
     },
     editIngredient: (_, { id, liquidId, volume }, { dataSources: { recipe } }) => {
       return recipe.updateIngredient(id, liquidId, volume)
+    },
+    processRecipe: (_, { recipeId }, { dataSources: { recipe, slot } }) => {
+      const recipeDescription = recipe.getById(recipeId)
+      const slots = slot.getAll()
+
+      console.log('processRecipe', recipeDescription)
+      console.log('slots', slots)
+
+      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
+      setTimeout(() => pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } }), 3000)
+
+      return recipeDescription
     },
   },
 }

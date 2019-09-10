@@ -9,7 +9,3 @@ module.exports = {
     },
   },
 }
-
-setInterval(() => {
-  pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: Math.random() > 0.5 ? 'A' : 'B' } })
-}, 3000)

@@ -22,5 +22,6 @@ module.exports = gql`
     createIngredient(recipeId: ID!): RecipeIngredient
     deleteIngredient(ingredientId: ID!): RecipeIngredient
     editIngredient(id: ID!, recipeId: ID!, liquidId: ID!, volume: Int!): RecipeIngredient
+    processRecipe(recipeId: ID!): RecipeIngredient
   }
 `
