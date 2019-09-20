@@ -53,13 +53,27 @@ module.exports = {
       return recipe.updateIngredient(id, liquidId, volume)
     },
     processRecipe: (_, { recipeId }, { dataSources: { recipe, slot } }) => {
+      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
+
       const recipeDescription = recipe.getById(recipeId)
       const slots = slot.getAll()
 
-      console.log('processRecipe', recipeDescription)
-      console.log('slots', slots)
+      // close
+      // go home
+      // iterate ingredients
+      // go park
+      // open
 
-      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
+      const ingredients = recipeDescription.ingredients
+        .map(({ liquidId, volume }) => {
+          const { shotVolume, coordinate } = slots.find((slot) => slot.liquidId === liquidId)
+          const pushesNumber = Math.ceil(volume / shotVolume) || 1
+          return { pushesNumber, coordinate }
+        })
+        .sort((a, b) => a.coordinate - b.coordinate)
+
+      console.log('ingredients', ingredients)
+
       setTimeout(() => pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } }), 3000)
 
       return recipeDescription

@@ -73,13 +73,13 @@ class Recipe extends Common {
       .map((item) => item.liquidId)
 
     const grouped = _.groupBy(recipeIngredientDao.getAll(), 'recipeId')
-    return this.dao
-      .getAll()
-      .filter((recipe) =>
-        _.get(grouped, recipe.id, []).every((recipeIngredient) =>
-          availableLiquidIds.includes(recipeIngredient.liquidId),
-        ),
-      )
+
+    return this.dao.getAll().filter((recipe) => {
+      const ingredientsForRecipe = _.get(grouped, recipe.id)
+      return ingredientsForRecipe
+        ? ingredientsForRecipe.every((recipeIngredient) => availableLiquidIds.includes(recipeIngredient.liquidId))
+        : false
+    })
   }
 
   addIngredient(recipeId, liquidId, volume) {

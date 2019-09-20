@@ -8,6 +8,7 @@ module.exports = gql`
     liquid(id: ID!): Liquid
     machine: Machine
     recipes: [Recipe]
+    validRecipes: [Recipe]
     recipe(id: ID!): Recipe
   }
 `
