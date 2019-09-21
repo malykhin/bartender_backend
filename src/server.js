@@ -2,7 +2,6 @@ const { ApolloServer } = require('apollo-server')
 
 const typeDefs = require('./typeDefs')
 const resolvers = require('./resolvers')
-
 const slot = require('./services/slot')
 const recipe = require('./services/recipe')
 const machine = require('./services/machine')

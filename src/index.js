@@ -8,5 +8,3 @@ async function run() {
 }
 
 run()
-
-//bartender.readyStatusChangeEmitter.once('is_ready_change', () => bartender.reset().then(console.log))

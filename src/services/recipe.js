@@ -1,19 +1,14 @@
 const _ = require('lodash')
 
 const Common = require('./Common')
-
 const recipeDao = require('../DAO/recipe')
 const recipeModel = require('../Models/recipe')
-
 const liquidDao = require('../DAO/liquid')
 const liquidModel = require('../Models/liquid')
-
 const slotDao = require('../DAO/slot')
 const slotModel = require('../Models/slot')
-
 const recipeIngredientDao = require('../DAO/recipeIngredient')
 const recipeIngredientModel = require('../Models/recipeIngredient')
-
 const { relateOneToMany, relateOneToOne } = require('../utils/dataHelpers')
 const errors = require('../constants/errors')
 
@@ -31,10 +26,8 @@ class Recipe extends Common {
     super(model, dao)
     this.recipeIngredientModel = _recipeIngredientModel
     this.recipeIngredientDao = _recipeIngredientDao
-
     this.liquidModel = _liquidModel
     this.liquidDao = _liquidDao
-
     this.slotModel = _slotModel
     this.slotDao = _slotDao
   }

@@ -1,13 +1,10 @@
 const _ = require('lodash')
 
 const Common = require('./Common')
-
 const slotDao = require('../DAO/slot')
 const slotModel = require('../Models/slot')
-
 const liquidDao = require('../DAO/liquid')
 const liquidModel = require('../Models/liquid')
-
 const { relateOneToOne } = require('../utils/dataHelpers')
 const errors = require('../constants/errors')
 

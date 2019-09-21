@@ -14,15 +14,15 @@ class Bartender {
 
     this.parser = parser
     this.port = port
+    this.timeout = timeout
+    this._isReady = false
+
     this.parser.on('data', (data) => {
       const response = JSON.parse(data)
       if (response.status === statuses.READY) {
         this.isReady = true
       }
     })
-
-    this.timeout = timeout
-    this._isReady = false
 
     this.readyStatusChangeEmitter = new EventEmitter()
   }
@@ -42,13 +42,12 @@ class Bartender {
         return { status: statuses.NOT_READY }
       }
       this.isReady = false
-      console.log('command', command)
+
       await this.port.write(`${JSON.stringify(command)}\n`)
 
       const waitForAnswer = new Promise((resolve) => {
         this.parser.once('data', (data) => resolve(JSON.parse(data)))
       })
-
       return Promise.race([timeoutPromise(this.timeout), waitForAnswer])
     } finally {
       this.isReady = true
