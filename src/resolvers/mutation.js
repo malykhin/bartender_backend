@@ -1,6 +1,7 @@
 const pubSub = require('../providers/apolloPubSub')
 const machineProvider = require('../providers/machine')
 const bartender = require('../providers/bartender')
+
 const { STATUS_CHANGED } = require('../constants/subscriptionStatuses')
 const { BUSY, READY } = require('../constants/machineStatuses')
 
@@ -93,19 +94,31 @@ module.exports = {
       const slots = slot.getAll()
       const { homePosition, finalPosition, stepsPerMm } = machine.get()
 
-      const ingredients = recipeDescription.ingredients
-        .map(({ liquidId, volume }) => {
-          const { shotVolume, coordinate } = slots.find((slot) => slot.liquidId === liquidId)
-          const pushesNumber = Math.ceil(volume / shotVolume) || 1
-          return { pushesNumber, coordinate: coordinate * stepsPerMm }
-        })
-        .sort((a, b) => a.coordinate - b.coordinate)
+      try {
+        const ingredients = recipeDescription.ingredients
+          .map(({ liquidId, volume }) => {
+            const { shotVolume, coordinate } = slots.find((slot) => slot.liquidId === liquidId)
+            const pushesNumber = Math.ceil(volume / shotVolume) || 1
+            return { pushesNumber, coordinate: coordinate * stepsPerMm }
+          })
+          .sort((a, b) => a.coordinate - b.coordinate)
 
-      await machineProvider.run(bartender, ingredients, homePosition * stepsPerMm, finalPosition * stepsPerMm)
-
-      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
+        await machineProvider.run(ingredients, homePosition * stepsPerMm, finalPosition * stepsPerMm)
+      } catch (error) {
+        pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
+        throw error
+      }
 
       return recipeDescription
+    },
+
+    resetMachine: async () => {
+      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
+      await machineProvider.reset().catch((error) => {
+        pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
+        throw error
+      })
+      return true
     },
   },
 }

@@ -23,5 +23,7 @@ module.exports = gql`
     deleteIngredient(ingredientId: ID!): RecipeIngredient
     editIngredient(id: ID!, recipeId: ID!, liquidId: ID!, volume: Int!): RecipeIngredient
     processRecipe(recipeId: ID!): RecipeIngredient
+
+    resetMachine: Boolean
   }
 `

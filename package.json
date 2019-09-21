@@ -6,7 +6,8 @@
   "scripts": {
     "start:dev": "nodemon --inspect ./src/index.js --ignore *.json",
     "start": "node ./src/index.js",
-    "test": "NODE_ENV=test jest --coverage"
+    "test": "NODE_ENV=test jest --coverage",
+    "lint": "eslint . --ext .js"
   },
   "type": "commonjs",
   "engines": {

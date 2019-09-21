@@ -1,20 +1,32 @@
-async function run(bartender, ingredients, homePosition, finishPosition) {
-  await bartender.prepareDozer()
-  await bartender.moveTo(homePosition)
+const bartender = require('../providers/bartender')
 
-  for (let ingredient of ingredients) {
-    await bartender.moveTo(ingredient.coordinate)
-    const pushIterator = Array(ingredient.pushesNumber).fill(true)
-
-    for (let i of pushIterator) {
-      bartender.pushDozer(i)
-    }
+class Machine {
+  constructor(bartender) {
+    this.bartender = bartender
   }
 
-  await bartender.moveTo(finishPosition)
-  await bartender.idleDozer()
+  async run(ingredients, homePosition, finishPosition) {
+    await this.bartender.prepareDozer()
+    await this.bartender.moveTo(homePosition)
+
+    for (let ingredient of ingredients) {
+      await this.bartender.moveTo(ingredient.coordinate)
+      const pushIterator = Array(ingredient.pushesNumber).fill(true)
+
+      for (let i of pushIterator) {
+        this.bartender.pushDozer(i)
+      }
+    }
+
+    await this.bartender.moveTo(finishPosition)
+    await this.bartender.idleDozer()
+  }
+
+  async reset() {
+    await this.bartender.prepareDozer()
+    await this.bartender.reset()
+    await this.bartender.idleDozer()
+  }
 }
 
-module.exports = {
-  run,
-}
+module.exports = new Machine(bartender)
