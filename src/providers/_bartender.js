@@ -3,6 +3,10 @@ const EventEmitter = require('events')
 const { timeoutPromise } = require('../utils/common')
 const commands = require('../constants/commands')
 const statuses = require('../constants/statuses')
+const initSerial = require('../providers/serial')
+const config = require('../config')
+
+const { port, parser } = initSerial(config.serialPort, +config.baudRate)
 
 class Bartender {
   constructor(options) {
@@ -10,7 +14,6 @@ class Bartender {
 
     this.parser = parser
     this.port = port
-
     this.parser.on('data', (data) => {
       const response = JSON.parse(data)
       if (response.status === statuses.READY) {
@@ -39,11 +42,11 @@ class Bartender {
         return { status: statuses.NOT_READY }
       }
       this.isReady = false
-
+      console.log('command', command)
       await this.port.write(`${JSON.stringify(command)}\n`)
 
       const waitForAnswer = new Promise((resolve) => {
-        this.parser.on('data', (data) => resolve(JSON.parse(data)))
+        this.parser.once('data', (data) => resolve(JSON.parse(data)))
       })
 
       return Promise.race([timeoutPromise(this.timeout), waitForAnswer])
@@ -96,4 +99,4 @@ class Bartender {
   }
 }
 
-module.exports = Bartender
+module.exports = new Bartender({ port, parser, timeout: 5000 })

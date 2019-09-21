@@ -1,4 +1,8 @@
 const pubSub = require('../providers/apolloPubSub')
+const machineProvider = require('../providers/machine')
+
+const bartender = require('../providers/bartender')
+
 const { STATUS_CHANGED } = require('../constants/subscriptionStatuses')
 const { BUSY, READY } = require('../constants/machineStatuses')
 
@@ -52,17 +56,12 @@ module.exports = {
     editIngredient: (_, { id, liquidId, volume }, { dataSources: { recipe } }) => {
       return recipe.updateIngredient(id, liquidId, volume)
     },
-    processRecipe: (_, { recipeId }, { dataSources: { recipe, slot } }) => {
+    processRecipe: async (_, { recipeId }, { dataSources: { recipe, slot, machine } }) => {
       pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
 
       const recipeDescription = recipe.getById(recipeId)
       const slots = slot.getAll()
-
-      // close
-      // go home
-      // iterate ingredients
-      // go park
-      // open
+      const { homePosition, finalPosition } = machine.get()
 
       const ingredients = recipeDescription.ingredients
         .map(({ liquidId, volume }) => {
@@ -72,9 +71,9 @@ module.exports = {
         })
         .sort((a, b) => a.coordinate - b.coordinate)
 
-      console.log('ingredients', ingredients)
+      await machineProvider.run(bartender, ingredients, homePosition, finalPosition)
 
-      setTimeout(() => pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } }), 3000)
+      pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
 
       return recipeDescription
     },
