@@ -11,7 +11,7 @@ Works with hardware controller [bartender_arduino](https://github.com/malykhin/b
 
 - ~~finish recipe service;~~
 - ~~add `Machine` model, DAO, service - it should store and control the bartender bot config;~~
-- create `Machine` provider, it should receive recipe definition and run it with `Bartender` provider;
-- add graphql types / resolvers for manage entities ~~slot~~, ~~slots~~, ~~liquids~~, ~~machine~~;
-- modify graphql resolvers for hardware interactions;
-- add graphql subscribers to check machine statuses;
+- ~~create `Machine` provider, it should receive recipe definition and run it with `Bartender` provider;~~
+- ~~add graphql types / resolvers for manage entities ~~slot~~, ~~slots~~, ~~liquids~~, ~~machine~~;~~
+- ~~modify graphql resolvers for hardware interactions;~~
+- ~~add graphql subscribers to check machine statuses;~~
