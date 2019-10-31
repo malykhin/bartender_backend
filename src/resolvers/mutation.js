@@ -1,7 +1,7 @@
+const { omit } = require('lodash')
 const pubSub = require('../providers/apolloPubSub')
 const machineProvider = require('../providers/machine')
 const bartender = require('../providers/bartender')
-
 const { STATUS_CHANGED } = require('../constants/subscriptionStatuses')
 const { BUSY, READY } = require('../constants/machineStatuses')
 
@@ -38,20 +38,28 @@ module.exports = {
     ) => {
       const existingSettings = await bartender.getSettings()
 
-      await bartender.setSettings({
-        ...existingSettings,
+      const settings = {
+        ...omit(existingSettings, ['status']),
         zeroSpeed: zeroSpeed * stepsPerMm,
         zeroAccel: zeroAccel * stepsPerMm,
         maxStroke: maxStroke * stepsPerMm,
         speed: speed * stepsPerMm,
         accel: accel * stepsPerMm,
-      })
+      }
+      await bartender.setSettings(settings)
       return machine.update({ zeroSpeed, zeroAccel, maxStroke, speed, accel, stepsPerMm })
     },
 
     editDozer: async (_, { dozerOn, dozerOff, dozerIdle, dozerCycleDelay }, { dataSources: { machine } }) => {
       const existingSettings = await bartender.getSettings()
-      await bartender.setSettings({ ...existingSettings, dozerOn, dozerOff, dozerIdle, dozerCycleDelay })
+
+      await bartender.setSettings({
+        ...omit(existingSettings, ['status']),
+        dozerOn,
+        dozerOff,
+        dozerIdle,
+        dozerCycleDelay,
+      })
       return machine.update({ dozerOn, dozerOff, dozerIdle, dozerCycleDelay })
     },
 
@@ -114,10 +122,14 @@ module.exports = {
 
     resetMachine: async () => {
       pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: BUSY } })
-      await machineProvider.reset().catch((error) => {
-        pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
-        throw error
-      })
+      await machineProvider
+        .reset()
+        .catch((error) => {
+          throw error
+        })
+        .finally(() => {
+          pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
+        })
       return true
     },
   },

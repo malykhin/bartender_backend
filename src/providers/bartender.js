@@ -2,9 +2,9 @@ const EventEmitter = require('events')
 
 const { timeoutPromise } = require('../utils/common')
 const commands = require('../constants/commands')
-const statuses = require('../constants/statuses')
 const initSerial = require('../providers/serial')
 const config = require('../config')
+const { NotReady } = require('../constants/errors')
 
 const { port, parser } = initSerial(config.serialPort, +config.baudRate)
 
@@ -15,14 +15,7 @@ class Bartender {
     this.parser = parser
     this.port = port
     this.timeout = timeout
-    this._isReady = false
-
-    this.parser.on('data', (data) => {
-      const response = JSON.parse(data)
-      if (response.status === statuses.READY) {
-        this.isReady = true
-      }
-    })
+    this._isReady = true
 
     this.readyStatusChangeEmitter = new EventEmitter()
   }
@@ -37,20 +30,24 @@ class Bartender {
   }
 
   async sendCommand(command) {
+    console.log('Command:', command)
     try {
       if (!this.isReady) {
-        return { status: statuses.NOT_READY }
+        throw NotReady
       }
       this.isReady = false
-
-      await this.port.write(`${JSON.stringify(command)}\n`)
-
       const waitForAnswer = new Promise((resolve) => {
-        this.parser.once('data', (data) => resolve(JSON.parse(data)))
+        this.parser.once('data', (data) => console.log('Command answer:', data) || resolve(JSON.parse(data)))
       })
-      return Promise.race([timeoutPromise(this.timeout), waitForAnswer])
-    } finally {
+      await this.port.write(`${JSON.stringify(command)}\n`)
+      const result = await Promise.race([timeoutPromise(this.timeout), waitForAnswer])
+      console.log('Command result:', result)
       this.isReady = true
+      return result
+    } catch (error) {
+      console.log('Send command error:', error)
+      this.isReady = true
+      throw error
     }
   }
 
@@ -58,7 +55,7 @@ class Bartender {
     return this.sendCommand({ command: commands.GET_SETTINGS })
   }
 
-  setSettings(zeroSpeed, zeroAccel, maxStroke, speed, accel, dozerOn, dozerOff, dozerIdle, dozerCycleDelay) {
+  setSettings({ zeroSpeed, zeroAccel, maxStroke, speed, accel, dozerOn, dozerOff, dozerIdle, dozerCycleDelay }) {
     return this.sendCommand({
       command: commands.SET_SETTINGS,
       zeroSpeed,
@@ -98,4 +95,4 @@ class Bartender {
   }
 }
 
-module.exports = new Bartender({ port, parser, timeout: 5000 })
+module.exports = new Bartender({ port, parser, timeout: 10000 })
