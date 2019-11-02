@@ -14,7 +14,7 @@ class Machine {
       const pushIterator = Array(ingredient.pushesNumber).fill(true)
 
       for (let i of pushIterator) {
-        this.bartender.pushDozer(i)
+        await this.bartender.pushDozer(i)
       }
     }
 

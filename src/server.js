@@ -6,6 +6,7 @@ const slot = require('./services/slot')
 const recipe = require('./services/recipe')
 const machine = require('./services/machine')
 const liquid = require('./services/liquid')
+const logger = require('./utils/logger')
 
 const server = new ApolloServer({
   typeDefs,
@@ -20,5 +21,5 @@ const server = new ApolloServer({
 
 module.exports = () =>
   server.listen().then(({ url }) => {
-    console.log(`Server ready at ${url}`)
+    logger('Server ready at:', url)
   })

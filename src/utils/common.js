@@ -5,6 +5,11 @@ const timeoutPromise = (delay) =>
     setTimeout(() => reject(TimeoutExceeded), delay)
   })
 
+const wait = (delay) =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(), delay)
+  })
+
 const fileNamesImportFilter = (fileName) => fileName !== 'index.js' && fileName.indexOf('.js') > 0
 
-module.exports = { timeoutPromise, fileNamesImportFilter }
+module.exports = { timeoutPromise, wait, fileNamesImportFilter }

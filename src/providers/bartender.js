@@ -1,10 +1,12 @@
 const EventEmitter = require('events')
 
-const { timeoutPromise } = require('../utils/common')
+const { timeoutPromise, wait } = require('../utils/common')
 const commands = require('../constants/commands')
 const initSerial = require('../providers/serial')
 const config = require('../config')
 const { NotReady } = require('../constants/errors')
+
+const logger = require('../utils/logger')
 
 const { port, parser } = initSerial(config.serialPort, +config.baudRate)
 
@@ -30,22 +32,26 @@ class Bartender {
   }
 
   async sendCommand(command) {
-    console.log('Command:', command)
+    await wait(100)
+    logger('Command:', command)
     try {
       if (!this.isReady) {
         throw NotReady
       }
       this.isReady = false
       const waitForAnswer = new Promise((resolve) => {
-        this.parser.once('data', (data) => console.log('Command answer:', data) || resolve(JSON.parse(data)))
+        this.parser.once('data', (data) => {
+          logger('Command answer:', data)
+          resolve(JSON.parse(data))
+        })
       })
       await this.port.write(`${JSON.stringify(command)}\n`)
       const result = await Promise.race([timeoutPromise(this.timeout), waitForAnswer])
-      console.log('Command result:', result)
+      logger('Command result:', result)
       this.isReady = true
       return result
     } catch (error) {
-      console.log('Send command error:', error)
+      logger('Send command error:', error)
       this.isReady = true
       throw error
     }
@@ -95,4 +101,4 @@ class Bartender {
   }
 }
 
-module.exports = new Bartender({ port, parser, timeout: 10000 })
+module.exports = new Bartender({ port, parser, timeout: 15000 })
