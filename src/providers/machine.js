@@ -7,8 +7,7 @@ class Machine {
 
   async run(ingredients, homePosition, finishPosition) {
     await this.bartender.prepareDozer()
-    await this.bartender.moveTo(homePosition)
-
+    await this.bartender.reset()
     for (let ingredient of ingredients) {
       await this.bartender.moveTo(ingredient.coordinate)
       const pushIterator = Array(ingredient.pushesNumber).fill(true)
