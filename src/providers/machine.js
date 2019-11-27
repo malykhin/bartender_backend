@@ -10,10 +10,12 @@ class Machine {
     await this.bartender.reset()
     for (let ingredient of ingredients) {
       await this.bartender.moveTo(ingredient.coordinate)
-      const pushIterator = Array(ingredient.pushesNumber).fill(true)
+      const pushIterator = Array(ingredient.pushesNumber)
+        .fill(false)
+        .map((item, index, array) => index === array.length - 1)
 
-      for (let i of pushIterator) {
-        await this.bartender.pushDozer(i)
+      for (let isLastPush of pushIterator) {
+        await this.bartender.pushDozer(isLastPush)
       }
     }
 

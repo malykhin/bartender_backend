@@ -84,8 +84,8 @@ class Bartender {
     return this.sendCommand({ command: commands.MOVE_TO, position })
   }
 
-  pushDozer() {
-    return this.sendCommand({ command: commands.PUSH_DOZER })
+  pushDozer(isLastPush) {
+    return this.sendCommand({ command: commands.PUSH_DOZER, isLastPush })
   }
 
   idleDozer() {
