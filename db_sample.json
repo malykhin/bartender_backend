@@ -29,6 +29,11 @@
       "name": "Juce",
       "description": "Juce",
       "id": "373babb6-b522-4311-aedb-d0720fa3e352"
+    },
+    {
+      "name": "Whiskey",
+      "description": "Whiskey",
+      "id": "bff0e196-0110-4328-b5dd-7ea4bb097320"
     }
   ],
   "recipe": [
@@ -56,6 +61,21 @@
       "name": "Rum + Cola",
       "description": "Rum + Cola",
       "id": "2d743bea-aea4-42c3-9f44-aa70275181b0"
+    },
+    {
+      "name": "Gin + Tonic",
+      "description": "Gin + Tonic",
+      "id": "aada13d6-b735-4458-8ae0-e5fb37c0be7f"
+    },
+    {
+      "name": "Whiskey + Cola",
+      "description": "Whiskey + Cola",
+      "id": "a8cba14f-60d2-4864-8622-8e2a6effdc0a"
+    },
+    {
+      "name": "For Vanya",
+      "description": "For Vanya",
+      "id": "058a6882-7134-4eaf-a954-8cde58534697"
     }
   ],
   "recipe_ingredient": [
@@ -166,6 +186,42 @@
       "liquidId": "b69ae478-85d2-43d8-9093-e229d3eaf698",
       "volume": 25,
       "id": "e4d7a11f-44d8-454c-97d6-034acfc3d0ac"
+    },
+    {
+      "recipeId": "aada13d6-b735-4458-8ae0-e5fb37c0be7f",
+      "liquidId": "879c5b4f-e0a3-40d2-9c66-eed280b033e4",
+      "volume": 25,
+      "id": "fafb8fac-b7f4-4df9-810b-7203e0fd44ff"
+    },
+    {
+      "recipeId": "aada13d6-b735-4458-8ae0-e5fb37c0be7f",
+      "liquidId": "b172d691-9647-4c9a-86dd-9815cecc2e2b",
+      "volume": 50,
+      "id": "c5d9a487-460e-4050-8363-4ae887b2f826"
+    },
+    {
+      "recipeId": "a8cba14f-60d2-4864-8622-8e2a6effdc0a",
+      "liquidId": "bff0e196-0110-4328-b5dd-7ea4bb097320",
+      "volume": 25,
+      "id": "8d6585d8-22f5-4de8-b3e5-144885b51862"
+    },
+    {
+      "recipeId": "a8cba14f-60d2-4864-8622-8e2a6effdc0a",
+      "liquidId": "f4d0522e-3def-4d1a-9adf-8d213b7c7c56",
+      "volume": 50,
+      "id": "ebbd3b19-f671-4ad3-a850-5559917f10e2"
+    },
+    {
+      "recipeId": "058a6882-7134-4eaf-a954-8cde58534697",
+      "liquidId": "f4d0522e-3def-4d1a-9adf-8d213b7c7c56",
+      "volume": 25,
+      "id": "019efd58-ccfd-45b0-99ae-f584ae9269f3"
+    },
+    {
+      "recipeId": "058a6882-7134-4eaf-a954-8cde58534697",
+      "liquidId": "b172d691-9647-4c9a-86dd-9815cecc2e2b",
+      "volume": 25,
+      "id": "08ba9398-5aa9-4cec-847a-f57cfa1b2e08"
     }
   ],
   "slot": [
@@ -173,7 +229,7 @@
       "name": "1st",
       "description": "1st",
       "coordinate": 95,
-      "liquidId": "8a6702c5-77d0-4254-b5a8-c094a7f27d5b",
+      "liquidId": "879c5b4f-e0a3-40d2-9c66-eed280b033e4",
       "shotVolume": 25,
       "id": "514f8f1b-94dc-49c8-bbf1-6648dc911d78"
     },
@@ -181,7 +237,7 @@
       "name": "2nd",
       "description": "2nd",
       "coordinate": 180,
-      "liquidId": "f4d0522e-3def-4d1a-9adf-8d213b7c7c56",
+      "liquidId": "b172d691-9647-4c9a-86dd-9815cecc2e2b",
       "shotVolume": 25,
       "id": "8a19350b-7eff-4927-b886-d0acef880e3b"
     },
@@ -189,23 +245,23 @@
       "name": "3rd",
       "description": "3rd",
       "coordinate": 270,
-      "liquidId": "8a6702c5-77d0-4254-b5a8-c094a7f27d5b",
+      "liquidId": "f4d0522e-3def-4d1a-9adf-8d213b7c7c56",
       "shotVolume": 25,
       "id": "5d50030e-812f-4f91-aec3-19a780ff0fa6"
     },
     {
       "name": "4th",
       "description": "4th",
-      "coordinate": 355,
-      "liquidId": "b69ae478-85d2-43d8-9093-e229d3eaf698",
+      "coordinate": 350,
+      "liquidId": "bff0e196-0110-4328-b5dd-7ea4bb097320",
       "shotVolume": 25,
       "id": "27f4d946-6b9a-4e67-8925-0880eb845e25"
     },
     {
       "name": "5th",
       "description": "5th",
-      "coordinate": 440,
-      "liquidId": "8a6702c5-77d0-4254-b5a8-c094a7f27d5b",
+      "coordinate": 444,
+      "liquidId": "b69ae478-85d2-43d8-9093-e229d3eaf698",
       "shotVolume": 25,
       "id": "7b81bf8f-38ef-49b9-a96d-9c81ae029ce3"
     }

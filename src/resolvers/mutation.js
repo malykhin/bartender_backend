@@ -112,6 +112,7 @@ module.exports = {
           .sort((a, b) => a.coordinate - b.coordinate)
 
         await machineProvider.run(ingredients, homePosition * stepsPerMm, finalPosition * stepsPerMm)
+        pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
       } catch (error) {
         pubSub.publish(STATUS_CHANGED, { machineStatus: { statusName: READY } })
         throw error

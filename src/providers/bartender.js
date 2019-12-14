@@ -5,21 +5,30 @@ const commands = require('../constants/commands')
 const initSerial = require('../providers/serial')
 const config = require('../config')
 const { NotReady } = require('../constants/errors')
+const { GLASS_STATUS_CHANGED } = require('../constants/subscriptionStatuses')
 
 const logger = require('../utils/logger')
+const pubSub = require('../providers/apolloPubSub')
 
 const { port, parser } = initSerial(config.serialPort, +config.baudRate)
 
 class Bartender {
   constructor(options) {
-    const { port, parser, timeout } = options
+    const { port, parser, timeout, pubSub } = options
 
     this.parser = parser
     this.port = port
     this.timeout = timeout
     this._isReady = true
-
+    this.pubSub = pubSub
     this.readyStatusChangeEmitter = new EventEmitter()
+
+    parser.on('data', (data) => {
+      const { type, isGlassInserted } = JSON.parse(data)
+      if (type === GLASS_STATUS_CHANGED) {
+        pubSub.publish(GLASS_STATUS_CHANGED, { glassStatus: { isGlassInserted: isGlassInserted } })
+      }
+    })
   }
 
   get isReady() {
@@ -101,4 +110,4 @@ class Bartender {
   }
 }
 
-module.exports = new Bartender({ port, parser, timeout: 15000 })
+module.exports = new Bartender({ port, parser, pubSub, timeout: 15000 })
