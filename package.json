@@ -6,6 +6,8 @@
   "scripts": {
     "start:dev": "nodemon --inspect ./src/index.js --ignore *.json",
     "start": "node ./src/index.js",
+    "start:pm2": "pm2 start bartender.config.js",
+    "stop:pm2": "pm2 stop bartender.config.js",
     "test": "NODE_ENV=test jest --coverage",
     "lint": "eslint . --ext .js"
   },
@@ -35,7 +37,8 @@
     "eslint-plugin-jest": "^22.15.2",
     "eslint-plugin-node": "^9.1.0",
     "jest": "^24.9.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "pm2": "^4.2.1"
   },
   "jest": {
     "testMatch": [
