@@ -20,7 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "@serialport/parser-readline": "^2.0.2",
-    "apollo-server": "^2.25.3",
+    "apollo-server": "^2.25.4",
     "dotenv": "^8.1.0",
     "graphql": "^14.5.3",
     "graphql-subscriptions": "^1.1.0",
